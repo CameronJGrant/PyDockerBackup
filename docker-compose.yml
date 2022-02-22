@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - volume1:/etc/nginx/conf.d
+
+  pydockerbackup:
+    build: '.'
+    environment:
+      - BACKUP_NAME=test
+      - NUM_ROLLING_BACKUPS=10
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - S3_ENDPOINT_URL=$S3_ENDPOINT_URL
+      - S3_BUCKET_NAME=$S3_BUCKET_NAME
+    volumes:
+#      List volumes to backup in this stack below.
+      - volume1:/backup/volume1
+#      - volume2:/backup/volume2
+#      - volume3:/backup/volume3
+#    command: 'python main.py'
+
+volumes:
+  volume1:
